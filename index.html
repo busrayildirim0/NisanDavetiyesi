@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merve & Ali Sadık - Nişan Anıları</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: sparkle 6s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: rotate(0deg); }
+            50% { opacity: 1; transform: rotate(180deg); }
+        }
+
+        .header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .couple-names {
+            font-size: 2.5em;
+            color: #4a5568;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-title {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.1em;
+            color: #2d3748;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .upload-section {
+            background: rgba(247, 250, 252, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 2px dashed #cbd5e0;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .upload-section:hover {
+            border-color: #667eea;
+            background: rgba(247, 250, 252, 1);
+            transform: translateY(-5px);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .file-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .success-message, .error-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: rgba(72, 187, 120, 0.1);
+            color: #2f855a;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .error-message {
+            background: rgba(245, 101, 101, 0.1);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .hearts {
+            font-size: 2em;
+            color: #e53e3e;
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #718096;
+            position: relative;
+            z-index: 2;
+        }
+
+        .preview-container {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .drop-zone {
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(247, 250, 252, 0.5);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .drop-zone.dragover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .drop-zone p {
+            color: #4a5568;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .selected-files {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .file-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="couple-names">Merve & Ali Sadık</h1>
+            <h2 class="event-title">✨ Nişan Töreni ✨</h2>
+            <div class="hearts">💕</div>
+        </div>
+
+        <p class="message">
+            Bu özel günümüzde çektiğiniz fotoğrafları bizimle paylaşın! 
+            Anılarımızı birlikte oluşturalım. 📸
+        </p>
+
+        <div class="upload-section">
+            <div class="drop-zone" id="dropZone">
+                <p>📸 Fotoğrafları buraya sürükleyin veya seçmek için tıklayın</p>
+                <input type="file" id="photoInput" class="file-input" accept="image/*" multiple style="display: none;">
+                <button type="button" onclick="document.getElementById('photoInput').click()" style="background: transparent; border: none; color: #667eea; text-decoration: underline; cursor: pointer; font-size: 1.1em;">
+                    Fotoğraf Seç
+                </button>
+            </div>
+            
+            <div class="selected-files" id="selectedFiles"></div>
+            
+            <div class="preview-container" id="previewContainer">
+                <img id="previewImage" class="preview-image" alt="Önizleme">
+            </div>
+            
+            <button id="uploadBtn" class="upload-btn">
+                📤 Fotoğrafları Yükle
+            </button>
+            
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                ✅ Fotoğraflar başarıyla yüklendi! Teşekkür ederiz! 💕
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                ❌ Yükleme sırasında bir hata oluştu. Lütfen tekrar deneyin.
+            </div>
+        </div>
+
+        <div class="footer">
+            💝 Bizimle bu anı paylaştığınız için teşekkür ederiz! 💝
+        </div>
+    </div>
+
+    <script>
+        // Cloudinary Upload URL'si
+        const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dg5uykv6u/image/upload';
+        const UPLOAD_PRESET = 'NisanDavetiyesi';
+
+        // DOM elementleri
+        const photoInput = document.getElementById('photoInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const dropZone = document.getElementById('dropZone');
+        const selectedFiles = document.getElementById('selectedFiles');
+
+        let selectedFilesList = [];
+
+        // Drag & Drop olayları
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        // Dosya seçim olayı
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        // Dosyaları işle
+        function handleFiles(files) {
+            selectedFilesList = files.filter(file => file.type.startsWith('image/'));
+            
+            if (selectedFilesList.length === 0) {
+                errorMessage.textContent = '⚠️ Lütfen geçerli fotoğraf dosyaları seçin.';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            // Seçili dosyaları listele
+            selectedFiles.innerHTML = '';
+            selectedFilesList.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `📸 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                selectedFiles.appendChild(fileItem);
+            });
+
+            // İlk dosyanın önizlemesini göster
+            if (selectedFilesList.length > 0) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(selectedFilesList[0]);
+            }
+
+            // Hata mesajlarını gizle
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Yükleme fonksiyonu
+        uploadBtn.addEventListener('click', async function() {
+            if (selectedFilesList.length === 0) {
+                errorMessage.textContent = '⚠️ Lütfen önce fotoğraf seçin.';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            // UI güncellemeleri
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Yükleniyor...';
+            progressBar.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            let uploadedCount = 0;
+            const totalFiles = selectedFilesList.length;
+
+            try {
+                for (let i = 0; i < selectedFilesList.length; i++) {
+                    const file = selectedFilesList[i];
+                    
+                    // FormData oluştur
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', UPLOAD_PRESET);
+                    formData.append('folder', 'nisaan-photos');
+
+                    // Progress güncelle
+                    const progress = (i / totalFiles) * 80; // %80'e kadar progress
+                    progressFill.style.width = progress + '%';
+
+                    // Cloudinary'e yükle
+                    const response = await fetch(CLOUDINARY_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('Yüklendi:', result);
+                    uploadedCount++;
+                }
+
+                // Progress tamamla
+                progressFill.style.width = '100%';
+                
+                // Başarı mesajı
+                successMessage.innerHTML = `✅ ${uploadedCount} fotoğraf başarıyla yüklendi! Teşekkür ederiz! 💕`;
+                successMessage.style.display = 'block';
+                
+                // Formu temizle
+                selectedFilesList = [];
+                selectedFiles.innerHTML = '';
+                previewContainer.style.display = 'none';
+                photoInput.value = '';
+                
+            } catch (error) {
+                console.error('Yükleme hatası:', error);
+                errorMessage.textContent = `❌ Yükleme hatası: ${error.message}. İnternet bağlantınızı kontrol edin.`;
+                errorMessage.style.display = 'block';
+            } finally {
+                // UI'yi sıfırla
+                uploadBtn.disabled = false;
+                uploadBtn.textContent = '📤 Fotoğrafları Yükle';
+                setTimeout(() => {
+                    progressBar.style.display = 'none';
+                    progressFill.style.width = '0%';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
